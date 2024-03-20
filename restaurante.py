@@ -3,8 +3,8 @@ class Restaurante:
     lista_restaurante = []
 
     def __init__(self, nome, categoria):
-        self.nome = nome
-        self.categoria = categoria
+        self._nome = nome.title()
+        self._categoria = categoria.upper()
         self._ativo = False
         Restaurante.lista_restaurante.append(self)
 
@@ -16,19 +16,25 @@ class Restaurante:
         texto = str(vars(self))
         return texto
     
-    def listar_restaurante():
-        for restaurante in Restaurante.lista_restaurante:
-            print(f'Nome: {restaurante.nome.ljust(15)} | Categoria: {restaurante.categoria.ljust(15)} | Situação: {restaurante.ativo}')
+    @classmethod
+    def listar_restaurante(cls):
+        for restaurante in cls.lista_restaurante:
+            print(f'Nome: {restaurante._nome.ljust(15)} | Categoria: {restaurante._categoria.ljust(15)} | Situação: {restaurante.ativo}')
             # print(vars(restaurante))
 
     @property
     def ativo(self):
         return 'Ativo' if self._ativo == True else 'Inativo'
+    
+    def alternar_estado(self):
+        self._ativo = not self._ativo
 
 
 if __name__ == "__main__":
     restaurante1 = Restaurante('Bistrô', 'Fast Food')
     restaurante2 = Restaurante('Outback', 'Food')
-
-    Restaurante.listar_restaurante()
     
+    Restaurante.listar_restaurante()
+    restaurante1.alternar_estado()
+    print('-='*35)
+    Restaurante.listar_restaurante()
